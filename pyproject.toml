@@ -7,7 +7,12 @@ description = "Manifests and tooling for Pi's benchmark data, mirrored in a priv
 readme = "README.md"
 license = "MIT"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "pyyaml==6.0.3",
+]
+
+[project.scripts]
+pi-benchmarks = "pi_benchmarks.cli:main"
 
 [dependency-groups]
 dev = [

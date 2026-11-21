@@ -1,0 +1,7 @@
+# MATH-500: the 500 MATH test problems that OpenAI selected for "Let's Verify
+# Step by Step". Pi's scored benchmark for the answer baseline.
+name = "math-500"
+upstream = "https://huggingface.co/datasets/HuggingFaceH4/MATH-500/resolve/6e4ed1a2a79af7d8630a6b768ec859cb5af4d3be/test.jsonl"
+sha256 = "35dc41080a3680858b27fa7e0533d2d547825316fc5dafe5d316f4ccc5a06132"
+size = 446564
+license = "MIT, per the original MATH repository (https://github.com/hendrycks/math); the Hugging Face card states none"

@@ -1,0 +1,27 @@
+# jaws project file: the benchmark data Pi mirrors in S3. Fields and behaviour:
+# https://github.com/Jaws-Platform/jaws/blob/main/docs/research-projects.md
+#
+# A research project with one dataset and no task runner, so jaws creates the
+# bucket and nothing else: no network, no launch templates, no instances. No
+# component writes it. The owner imports each file with admin credentials
+# (README, "Importing a file").
+version: 1
+project: pi-benchmarks
+repository: Pi-Mathematical-Reasoning/pi-benchmarks
+
+# The tags every resource carries (through the provider's default_tags).
+# Project, Repository and Environment=prod are cross-checked.
+tags:
+  Organization: jaws
+  Project: pi-benchmarks
+  Environment: prod
+  Repository: Pi-Mathematical-Reasoning/pi-benchmarks
+  Owner: jwallace145
+
+components:
+  - kind: dataset
+    name: problems
+    bucket: jaws-pi-benchmarks-problems  # <Organization>-<project>-<name>
+    prefix: data/
+    # Kept forever, and an overwritten or deleted object stays recoverable.
+    versioning: true
