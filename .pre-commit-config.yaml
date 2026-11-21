@@ -1,0 +1,35 @@
+# Local hooks. CI is the authoritative check; these only shorten the feedback loop.
+#
+# Setup:
+#   npm ci
+#   pre-commit install --hook-type commit-msg --hook-type pre-commit
+
+# File hooks run before a commit; only commitlint runs on the message.
+default_stages: [pre-commit]
+
+repos:
+  - repo: local
+    hooks:
+      - id: commitlint
+        name: commitlint (one-line Conventional Commit, Co-authored-by trailers only)
+        entry: npx --no-install commitlint --edit
+        language: system
+        stages: [commit-msg]
+        always_run: true
+        pass_filenames: true
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-yaml
+      - id: check-json
+      - id: check-toml
+
+  # Keep this revision equal to the ruff version pinned in pyproject.toml.
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.17.6
+    hooks:
+      - id: ruff-check
+      - id: ruff-format

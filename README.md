@@ -1,5 +1,8 @@
 # pi-benchmarks
 
+[![CI](https://github.com/Pi-Mathematical-Reasoning/pi-benchmarks/actions/workflows/ci.yml/badge.svg?event=pull_request)](https://github.com/Pi-Mathematical-Reasoning/pi-benchmarks/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Pi-Mathematical-Reasoning/pi-benchmarks/blob/main/LICENSE)
+
 The benchmark data for [Pi](https://github.com/Pi-Mathematical-Reasoning/pi),
 mirrored in a private S3 bucket.
 
@@ -23,6 +26,12 @@ uv sync
 uv run pytest
 uv run ruff check . && uv run ruff format --check .
 ```
+
+## Contributing
+
+Every change reaches `main` through a pull request with a Conventional
+Commit title, and commits are a single line. [CONTRIBUTING.md](CONTRIBUTING.md)
+has the setup and the rules; coding agents read [AGENTS.md](AGENTS.md).
 
 ## License
 

@@ -1,0 +1,2 @@
+feat: add a manifest
+Co-authored-by: Jane Doe <jane@example.com>
