@@ -1,7 +1,7 @@
 [project]
 name = "pi-benchmarks"
 # Never published: the tool runs from a checkout. This number is not the
-# release version.
+# release version, which Release Please keeps in version.txt.
 version = "0.0.0"
 description = "Manifests and tooling for Pi's benchmark data, mirrored in a private S3 bucket."
 readme = "README.md"
