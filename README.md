@@ -13,10 +13,10 @@ manifests and tooling. It holds no problem text.
 
 ## Status
 
-**The bucket does not exist yet.** The project file and the manifests are
-here; the bucket is created once [Jaws](https://github.com/Jaws-Platform/jaws)
-registers the project and the owner runs its Bot apply. Until then Pi reads
-every file from its upstream.
+**Both files are mirrored.** [Jaws](https://github.com/Jaws-Platform/jaws)
+v0.71.0 created the bucket on 2026-11-21, and both files were imported and
+verified the same day. Pi reads them from the bucket when the shell is signed
+in to AWS, and from their upstream otherwise.
 
 ## What is mirrored
 
@@ -52,12 +52,13 @@ Then import, and verify everything the bucket holds:
 
 ```sh
 uv run pi-benchmarks import math-500
-uv run pi-benchmarks import math-train-12k --from ~/Projects/Pi/data/math-dev-5bb914caa970.parquet
+uv run pi-benchmarks import math-train-12k --from ../Pi/data/math-dev-5bb914caa970.parquet
 uv run pi-benchmarks verify
 ```
 
-`import` fetches the upstream, or takes a local copy with `--from`, and checks
-it against its manifest. It uploads only if the key is new, then reads the
+`import` fetches the upstream, or takes a local copy with `--from` (here, the
+checked copy in a `pi` checkout beside this one), and checks it against its
+manifest. It uploads only if the key is new, then reads the
 object back and checks it again. Running it twice changes nothing.
 
 ## Adding a file
