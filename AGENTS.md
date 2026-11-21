@@ -47,6 +47,11 @@ human-facing version, with setup details, is
   installs with `uv sync --locked`, so a stale lock fails.
 - **CI has no AWS credentials.** A test must pass without reaching S3 or an
   upstream.
+- **Never import, delete or overwrite anything in the bucket yourself.** Only
+  the owner imports, with admin credentials. A new file is a new manifest in a
+  pull request; the owner imports it after the merge.
+- **A manifest is never edited after its file is imported.** Its key is
+  derived from its name and checksum, so a changed file is a new manifest.
 
 ## Things that need the owner
 

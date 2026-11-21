@@ -1,0 +1,9 @@
+# The 12,000 MATH problems that PRM800K uses for training: MATH's 7,500
+# training problems and the 4,500 test problems not in MATH-500. Pi's
+# development problems are a frozen sample of it. Named for the file, not for
+# that first use.
+name = "math-train-12k"
+upstream = "https://huggingface.co/datasets/nlile/hendrycks-MATH-benchmark/resolve/465bcdb36f5962aa3512891498966df785fc3c18/data/train-00000-of-00001.parquet"
+sha256 = "5bb914caa970c120a9a139ccedef764da11e62965ac31f4dfff3ccf774199375"
+size = 5123868
+license = "MIT, per the original MATH repository (https://github.com/hendrycks/math); the Hugging Face card states none"
