@@ -1,0 +1,3 @@
+fix: refuse a wrong checksum
+
+Closes #12

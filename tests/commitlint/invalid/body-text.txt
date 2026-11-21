@@ -1,0 +1,3 @@
+feat: add a manifest
+
+This adds the manifest for a second benchmark.

@@ -1,0 +1,4 @@
+docs(readme): document the import command
+
+Co-authored-by: Jane Doe <jane@example.com>
+Co-authored-by: Sam Roe <sam@example.com>

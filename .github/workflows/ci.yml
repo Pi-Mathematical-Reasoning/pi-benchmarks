@@ -1,0 +1,118 @@
+name: CI
+
+on:
+  pull_request:
+    # `edited` re-runs the title check when the title changes.
+    types: [opened, synchronize, reopened, edited]
+
+# One run per pull request; a new push cancels the previous run.
+concurrency:
+  group: ci-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions: {}
+
+jobs:
+  commitlint:
+    name: commitlint
+    runs-on: ubuntu-latest
+    # Dependabot's commits carry a release-notes body, which the one-line rule
+    # rejects. Its pull requests are squash merged under their Conventional
+    # Commit title instead, so what lands on main still conforms. A skipped
+    # job satisfies the required status check.
+    if: github.event.pull_request.user.login != 'dependabot[bot]'
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # Every commit in the range is linted, so a rebase merge lands only
+          # one-line Conventional Commits on main.
+          fetch-depth: 0
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Lint every commit in base..head
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: npx commitlint --from "$BASE_SHA" --to "$HEAD_SHA" --verbose
+
+  pr-title:
+    name: pr-title
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      # A squash merge uses the title as the commit message, so the title is a
+      # Conventional Commit too.
+      - uses: amannn/action-semantic-pull-request@v6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          types: |
+            feat
+            fix
+            docs
+            chore
+            refactor
+            ci
+            build
+            perf
+            style
+            test
+            revert
+          requireScope: false
+          # Dependabot's titles are retitled at merge when they do not conform.
+          ignoreLabels: |
+            dependencies
+          subjectPattern: ^(?![A-Z]).+$
+          subjectPatternError: |
+            The subject "{subject}" must start with a lowercase letter.
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      # The same rules as a commit header, which adds the 100-character limit.
+      - name: Lint the title as a commit header
+        if: github.event.pull_request.user.login != 'dependabot[bot]'
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: printf '%s\n' "$PR_TITLE" | npx commitlint --verbose
+
+  commitlint-rules:
+    name: commitlint-rules
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Unit test the local rule and check the fixture messages
+        run: npm test
+
+  python:
+    name: python
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10.4.0 # no v10 major tag exists
+        with:
+          enable-cache: true
+      # uv installs the interpreter that .python-version pins, and --locked
+      # fails if uv.lock is out of date with pyproject.toml.
+      - run: uv sync --locked
+      - run: uv run ruff check .
+      - run: uv run ruff format --check .
+      - run: uv run pytest

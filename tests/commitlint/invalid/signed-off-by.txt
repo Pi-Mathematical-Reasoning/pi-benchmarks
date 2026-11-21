@@ -1,0 +1,3 @@
+fix: refuse a wrong checksum
+
+Signed-off-by: Jane Doe <jane@example.com>

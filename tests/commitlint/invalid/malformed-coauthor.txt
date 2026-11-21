@@ -1,0 +1,3 @@
+fix: refuse a wrong checksum
+
+Co-authored-by: Jane Doe
