@@ -28,6 +28,9 @@ human-facing version, with setup details, is
 - **Spell the trailer `Co-authored-by:` exactly.** The check is
   case-sensitive, so `Co-Authored-By:` fails it.
 - **Merges are squash or rebase only.** History stays linear.
+- **Releases are made by merging the Release Please pull request**, which is
+  authored by `pi-release-bot[bot]`. Do not create tags or releases by hand,
+  and do not edit `CHANGELOG.md` or `version.txt`.
 - **Run the checks before opening a pull request:**
 
   ```sh

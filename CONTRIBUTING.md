@@ -78,6 +78,31 @@ CI runs these jobs on every pull request, and all of them are required on
 | `commitlint-rules` | Unit tests for the local rule, and the fixture messages |
 | `python` | `uv sync --locked`, `ruff check`, `ruff format --check` and `pytest` |
 
+## Releases and versioning
+
+Releases are managed by [Release Please](https://github.com/googleapis/release-please).
+A release is a `vX.Y.Z` tag, a GitHub release and a `CHANGELOG.md` entry.
+Nothing is published or deployed.
+
+- One version for the whole repository (`release-type: simple`). Release
+  Please owns `CHANGELOG.md` and `version.txt`; nobody edits them by hand.
+  The `version` in `pyproject.toml` stays at `0.0.0`, because the package is
+  never published.
+- On every push to `main`, the `release-please` workflow opens or updates a
+  release pull request authored by `pi-release-bot[bot]`, the organization's
+  GitHub App. The organization secrets `RELEASE_BOT_CLIENT_ID` and
+  `RELEASE_BOT_PRIVATE_KEY` are its credentials. CI runs on it like any other
+  pull request.
+- **Merging the Release Please pull request is the deliberate, human-reviewed
+  act that releases a version.** Nobody creates tags by hand.
+
+| Commit type | Bump |
+|---|---|
+| `feat!` / `fix!`, any breaking change | major (minor while `0.x`) |
+| `feat` | minor |
+| `fix` | patch |
+| `docs`, `chore`, `ci`, `refactor`, `test`, `style`, `build` | no release on their own |
+
 ## Repository settings
 
 `scripts/apply-repo-settings.sh` applies the settings through the GitHub API:
