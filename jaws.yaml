@@ -10,9 +10,9 @@ project: pi-benchmarks
 repository: Pi-Mathematical-Reasoning/pi-benchmarks
 
 # The tags every resource carries (through the provider's default_tags).
-# Project, Repository and Environment=prod are cross-checked.
+# Project, Repository and Environment=prod are cross-checked; jaws adds
+# Organization (this repository's GitHub owner) and ManagedBy itself.
 tags:
-  Organization: jaws
   Project: pi-benchmarks
   Environment: prod
   Repository: Pi-Mathematical-Reasoning/pi-benchmarks
@@ -21,7 +21,7 @@ tags:
 components:
   - kind: dataset
     name: problems
-    bucket: jaws-pi-benchmarks-problems  # <Organization>-<project>-<name>
+    bucket: jaws-pi-benchmarks-problems  # <name_root>-<project>-<name>
     prefix: data/
     # Kept forever, and an overwritten or deleted object stays recoverable.
     versioning: true
